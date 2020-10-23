@@ -1,3 +1,25 @@
+# 4.2.1
+
+2020-10-15
+
+* fixed unintended Fault evaluation in metadata collision error message
+* fixed sorting of Faults with other types
+* fixed display of paged output on large macOS terminals
+* fixed svc_openbsd being applied concurrently
+* fixed services being reloaded and restarted at the same time
+* fixed possible mangling of group metadata from items.py
+
+
+# 4.2.0
+
+2020-09-21
+
+* added `BW_GIT_DEPLOY_CACHE`
+* added `lock_dir` node attribute
+* added `pip_command` node attribute
+* Fault callbacks can now accept some unhashable parameters (such as dicts)
+
+
 # 4.1.1
 
 2020-08-12

@@ -45,6 +45,11 @@ class SvcOpenBSD(Item):
     }
     ITEM_TYPE_NAME = "svc_openbsd"
 
+    @classmethod
+    def block_concurrent(cls, node_os, node_os_version):
+        # https://github.com/bundlewrap/bundlewrap/issues/554
+        return [cls.ITEM_TYPE_NAME]
+
     def __repr__(self):
         return "<SvcOpenBSD name:{} running:{} enabled:{}>".format(
             self.name,
@@ -68,7 +73,8 @@ class SvcOpenBSD(Item):
         return {
             'restart': {
                 'command': "/etc/rc.d/{} restart".format(self.name),
-                'needs': [self.id],
+                # make sure we don't restart and stopstart simultaneously
+                'needs': [f"{self.id}:stopstart"],
             },
             'stopstart': {
                 'command': "/etc/rc.d/{0} stop && /etc/rc.d/{0} start".format(self.name),
